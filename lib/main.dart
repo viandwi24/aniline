@@ -1,20 +1,32 @@
+import 'package:aniline/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'screens/main/main.dart';
 
 void main() {
   runApp(const AnilineApp());
 }
 
-class AnilineApp extends StatelessWidget {
-  const AnilineApp({Key? key}) : super(key: key);
+class AnilineApp extends StatefulWidget {
+  const AnilineApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<AnilineApp> createState() => _AnilineAppState();
+}
+
+class _AnilineAppState extends State<AnilineApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    final textTheme = Theme.of(context).textTheme;
+    return MaterialApp(
+      theme: ThemeData(
+          textTheme: GoogleFonts.indieFlowerTextTheme(textTheme).copyWith(
+        button: GoogleFonts.indieFlower(textStyle: TextStyle(fontSize: 20)),
+        bodyText2: GoogleFonts.indieFlower(textStyle: TextStyle(fontSize: 18)),
+      )),
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: AnilineMainApp(),
+      home: SplashScreen(),
     );
   }
 }
