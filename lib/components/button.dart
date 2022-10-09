@@ -20,7 +20,7 @@ class AnilineButton extends StatelessWidget {
         width: double.infinity,
         child: Text(
           text,
-          style: TextStyle(color: kTextColor),
+          style: const TextStyle(color: kTextColor),
           textAlign: TextAlign.center,
         ),
       ),

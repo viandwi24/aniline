@@ -1,7 +1,5 @@
-import 'package:aniline/components/catalog-card.dart';
+import 'package:aniline/components/catalog_card.dart';
 import 'package:flutter/material.dart';
-import 'package:aniline/components/category-card.dart';
-import 'package:aniline/constant.dart';
 
 class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
@@ -45,39 +43,39 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Container(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Recommended',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+      physics: const BouncingScrollPhysics(),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'Recommended',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      'See All',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                      ),
+                  ),
+                  Text(
+                    'See All',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Column(
-                children: <AnilineCatalogCard>[for (var item in items) item],
-              ),
-            ],
-          ),
-        ));
+            ),
+            Column(
+              children: <AnilineCatalogCard>[for (var item in items) item],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

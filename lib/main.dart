@@ -1,20 +1,28 @@
+import 'package:aniline/screens/splash/splash.dart';
+import 'package:aniline/utils/theme_builder.dart';
 import 'package:flutter/material.dart';
-import 'screens/main/main.dart';
 
 void main() {
   runApp(const AnilineApp());
 }
 
-class AnilineApp extends StatelessWidget {
-  const AnilineApp({Key? key}) : super(key: key);
+class AnilineApp extends StatefulWidget {
+  const AnilineApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<AnilineApp> createState() => _AnilineAppState();
+}
+
+class _AnilineAppState extends State<AnilineApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    final anilineTheme = anilineThemeDataBuilder(context, null);
+
+    return MaterialApp(
+      theme: anilineTheme,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: AnilineMainScreen(),
+      home: const SplashScreen(),
     );
   }
 }
