@@ -15,9 +15,9 @@ final TextTheme kDefaultTextTheme = TextTheme(
     textStyle: const TextStyle(fontSize: 20),
   ),
   bodyText1: GoogleFonts.nunitoSans(
-    textStyle: const TextStyle(fontSize: 18),
+    textStyle: const TextStyle(fontSize: 14),
   ),
   bodyText2: GoogleFonts.nunitoSans(
-    textStyle: const TextStyle(fontSize: 18),
+    textStyle: const TextStyle(fontSize: 14),
   ),
 );

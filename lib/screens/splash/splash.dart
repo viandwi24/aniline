@@ -1,3 +1,4 @@
+import 'package:aniline/components/button.dart';
 import 'package:aniline/screens/main/main.dart';
 import 'package:flutter/material.dart';
 import 'package:aniline/constant.dart';
@@ -47,16 +48,19 @@ class _SplashScreenState extends State<SplashScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AnilineMainScreen(),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: AnilineButton(
+                text: 'Getting Started',
+                onPressed: () => {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AnilineMainScreen(),
+                    ),
                   ),
-                );
-              },
-              child: const Text("Getting Started"),
+                },
+              ),
             ),
           ],
         ),
