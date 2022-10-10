@@ -1,4 +1,5 @@
 import 'package:aniline/components/catalog_card.dart';
+import 'package:aniline/services/api.dart';
 import 'package:flutter/material.dart';
 
 class HomeTabScreen extends StatefulWidget {
@@ -17,28 +18,46 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
       eps: 13,
       genre: 'Romance',
     ),
-    AnilineCatalogCard(
-      title: 'Hige wo Soru. Soshite Joshikousei wo Hirou.',
-      cover:
-          'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx114232-2rm50ZD1cQgP.jpg',
-      eps: 4,
-      genre: 'Romance',
-    ),
-    AnilineCatalogCard(
-      title: 'Osananajimi ga Zettai ni Makenai Love Come',
-      cover:
-          'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx124675-fNI06ipb65vy.jpg',
-      eps: 2,
-      genre: 'Romance',
-    ),
-    AnilineCatalogCard(
-      title: 'a',
-      cover:
-          'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b116267-JArFvMYRdnbd.jpg',
-      eps: 13,
-      genre: 'Romance',
-    ),
+    // AnilineCatalogCard(
+    //   title: 'Hige wo Soru. Soshite Joshikousei wo Hirou.',
+    //   cover:
+    //       'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx114232-2rm50ZD1cQgP.jpg',
+    //   eps: 4,
+    //   genre: 'Romance',
+    // ),
+    // AnilineCatalogCard(
+    //   title: 'Osananajimi ga Zettai ni Makenai Love Come',
+    //   cover:
+    //       'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx124675-fNI06ipb65vy.jpg',
+    //   eps: 2,
+    //   genre: 'Romance',
+    // ),
   ];
+
+  // fetch
+  _fetchData() async {
+    final response = await UseApi().revoke(ApiMovieRecommendationGet());
+    final animes = ApiMovieRecommendationGet.parseBody(response);
+    final List<AnilineCatalogCard> newItems = [];
+    for (final anime in animes) {
+      newItems.add(AnilineCatalogCard(
+        title: anime.title,
+        cover: anime.image,
+      ));
+    }
+    setState(() {
+      items = newItems;
+    });
+  }
+
+  // fetch data on init
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +90,13 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               ),
             ),
             Column(
-              children: <AnilineCatalogCard>[for (var item in items) item],
+              children: <Widget>[
+                for (var item in items)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 15),
+                    child: item,
+                  ),
+              ],
             ),
           ],
         ),

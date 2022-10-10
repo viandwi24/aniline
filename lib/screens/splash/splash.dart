@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:aniline/components/button.dart';
+import 'package:aniline/models/anime.dart';
 import 'package:aniline/screens/main/main.dart';
+import 'package:aniline/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:aniline/constant.dart';
 
@@ -11,6 +16,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final String signature = Random().nextInt(1000000000).toString();
+
+  Future onPressMainButton() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AnilineMainScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               margin: const EdgeInsets.only(bottom: 20),
               child: const Text(
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo",
+                "a portal app for discovery and explorer movie and anime in the world.",
                 style: TextStyle(color: kTextColor),
                 textAlign: TextAlign.center,
               ),
@@ -51,15 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: AnilineButton(
-                text: 'Getting Started',
-                onPressed: () => {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AnilineMainScreen(),
-                    ),
-                  ),
-                },
+                text: 'Getting Started $signature',
+                onPressed: onPressMainButton,
               ),
             ),
           ],
