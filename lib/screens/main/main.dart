@@ -1,4 +1,5 @@
 import 'package:aniline/constant.dart';
+import 'package:aniline/screens/main/tabs/news.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'tabs/home.dart';
@@ -38,7 +39,7 @@ class _AnilineMainScreenState extends State<AnilineMainScreen> {
         if (index == 1) {
           widget = const ExplorerTabScreen();
         } else if (index == 2) {
-          widget = const ExplorerTabScreen();
+          widget = const NewsTabScreen();
         } else {
           widget = const HomeTabScreen();
         }

@@ -14,15 +14,27 @@ class UseApi {
 }
 
 class ApiContract {
-  const ApiContract({required this.url, required this.method});
+  const ApiContract({required this.url, required this.method, this.params});
 
   final String url;
   final String method;
+  final Map<String, dynamic>? params;
 
   Future<Response> onFetch() async {
-    final response = await get(Uri.parse(url));
+    final urlRes = url + getParamsInURL();
+    final fullURL = Uri.parse(urlRes);
+    final response = await get(fullURL);
+    print(fullURL);
 
     return response;
+  }
+
+  getParamsInURL() {
+    if (params == null) return '';
+    final paramsInURL =
+        params!.entries.map((e) => '${e.key}=${e.value}').join('&');
+
+    return '?$paramsInURL';
   }
 
   onParseResponse(Response response) {
@@ -41,7 +53,7 @@ class ApiContract {
     return response.body;
   }
 
-  static parseToJSOn(Response response) {
+  static parseToJson(Response response) {
     return jsonDecode(response.body);
   }
 }
@@ -56,10 +68,8 @@ class ApiMovieRecommendationGet extends ApiContract {
   static List<AnimeModel> parseBody(Response response, {maxAnime = 10}) {
     final List<AnimeModel> animes = [];
 
-    // parse json
-
     // parse
-    final parsedBody = ApiContract.parseToJSOn(response);
+    final parsedBody = ApiContract.parseToJson(response);
     final data = parsedBody['data'];
 
     // if data found and is array
@@ -99,6 +109,47 @@ class ApiMovieRecommendationGet extends ApiContract {
       }
     }
 
+    return animes;
+  }
+}
+
+class ApiMovieSearch extends ApiContract {
+  ApiMovieSearch(String query)
+      : super(
+          url: 'https://api.jikan.moe/v4/anime',
+          method: 'GET',
+          params: {
+            'q': query,
+          },
+        );
+
+  static List<AnimeModel> parseBody(Response response, {maxAnime = 10}) {
+    final List<AnimeModel> animes = [];
+
+    // parse
+    final parsedBody = ApiContract.parseToJson(response);
+    final data = parsedBody['data'];
+
+    // if data found and is array;
+    // print(data);
+    if (data != null && data is List) {
+      // loop through data
+      for (var i = 0; i < data.length; i++) {
+        // get item
+        final item = data[i];
+        // if animeData found and is Map
+        if (item != null && item is Map) {
+          try {
+            final m = AnimeModel.fromJson(item);
+            animes.add(m);
+          } catch (e) {
+            print(e);
+          }
+        }
+      }
+    }
+
+    // animes
     return animes;
   }
 }

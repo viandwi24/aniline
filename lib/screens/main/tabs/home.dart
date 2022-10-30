@@ -1,6 +1,7 @@
 import 'package:aniline/components/catalog_card.dart';
 import 'package:aniline/services/api.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class HomeTabScreen extends StatefulWidget {
 }
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
+  bool isLoading = false;
   List<AnilineCatalogCard> items = const [
     AnilineCatalogCard(
       title: 'Tonikaku Kawaii',
@@ -36,6 +38,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
 
   // fetch
   _fetchData() async {
+    setState(() {
+      isLoading = true;
+    });
     final response = await UseApi().revoke(ApiMovieRecommendationGet());
     final animes = ApiMovieRecommendationGet.parseBody(response);
     final List<AnilineCatalogCard> newItems = [];
@@ -43,10 +48,14 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
       newItems.add(AnilineCatalogCard(
         title: anime.title,
         cover: anime.image,
+        eps: 13,
+        genre: 'Drama',
       ));
     }
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       items = newItems;
+      isLoading = false;
     });
   }
 
@@ -61,6 +70,22 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Container(
+        alignment: Alignment.center,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Lottie.asset('assets/anims/96031-loading-animation.json'),
+              const Text('Chottomatte kudasai...'),
+            ],
+          ),
+        ),
+      );
+    }
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Container(
@@ -94,6 +119,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                 for (var item in items)
                   Container(
                     margin: const EdgeInsets.only(bottom: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: item,
                   ),
               ],
