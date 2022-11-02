@@ -1,4 +1,5 @@
 import 'package:aniline/components/catalog_card.dart';
+import 'package:aniline/constant.dart';
 import 'package:aniline/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -13,13 +14,13 @@ class HomeTabScreen extends StatefulWidget {
 class _HomeTabScreenState extends State<HomeTabScreen> {
   bool isLoading = false;
   List<AnilineCatalogCard> items = const [
-    AnilineCatalogCard(
-      title: 'Tonikaku Kawaii',
-      cover:
-          'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b116267-JArFvMYRdnbd.jpg',
-      eps: 13,
-      genre: 'Romance',
-    ),
+    // AnilineCatalogCard(
+    //   title: 'Tonikaku Kawaii',
+    //   cover:
+    //       'https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b116267-JArFvMYRdnbd.jpg',
+    //   eps: 13,
+    //   genre: 'Romance',
+    // ),
     // AnilineCatalogCard(
     //   title: 'Hige wo Soru. Soshite Joshikousei wo Hirou.',
     //   cover:
@@ -48,8 +49,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
       newItems.add(AnilineCatalogCard(
         title: anime.title,
         cover: anime.image,
-        eps: 13,
-        genre: 'Drama',
+        labelTop: 'Eps 13',
+        labelBottom: 'Drama',
       ));
     }
     await Future.delayed(const Duration(seconds: 2));
@@ -102,6 +103,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: kTextColor,
                     ),
                   ),
                   Text(
@@ -109,6 +111,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w300,
+                      color: kTextColor,
                     ),
                   ),
                 ],

@@ -173,12 +173,12 @@ packages:
     source: hosted
     version: "3.0.1"
   html:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.0"
+    version: "0.15.1"
   http:
     dependency: "direct main"
     description:

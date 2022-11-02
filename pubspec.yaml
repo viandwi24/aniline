@@ -32,12 +32,11 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^3.0.1
+  html: ^0.15.1
   http: ^0.13.5
   lottie: ^1.4.3
 
 dev_dependencies:
-
-  # https://pub.dev/packages/dart_code_metrics
   dart_code_metrics: 4.20.0
   flutter_lints: ^2.0.0
   flutter_test:

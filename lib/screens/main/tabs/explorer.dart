@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aniline/components/catalog_card.dart';
+import 'package:aniline/constant.dart';
 import 'package:aniline/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +50,8 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
       newItems.add(AnilineCatalogCard(
         title: anime.title,
         cover: anime.image,
-        eps: 13,
-        genre: 'Drama',
+        labelTop: 'Eps 13',
+        labelBottom: 'Drama',
       ));
     }
     await Future.delayed(const Duration(seconds: 2));
@@ -68,19 +69,13 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
         children: [
           Container(
             clipBehavior: Clip.hardEdge,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: kBackgroundSecondaryColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               children: [
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 16),
-                    child: const Icon(CupertinoIcons.search),
-                  ),
-                ),
                 Flexible(
                   flex: 12,
                   child: TextField(
@@ -91,7 +86,16 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Search anime title...",
-                      fillColor: Colors.white,
+                      fillColor: kBackgroundSecondaryColor,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    child: Icon(
+                      CupertinoIcons.search,
+                      color: kTextColor.withOpacity(0.3),
                     ),
                   ),
                 ),

@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:aniline/models/anime.dart';
+import 'package:aniline/models/post.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:http/http.dart';
+import 'package:html/parser.dart' as parser;
 
 class UseApi {
   Future<Response> revoke(ApiContract api) async {
@@ -151,5 +154,59 @@ class ApiMovieSearch extends ApiContract {
 
     // animes
     return animes;
+  }
+}
+
+class ApiPostJurnalOtakuGet extends ApiContract {
+  ApiPostJurnalOtakuGet()
+      : super(
+          url: 'http://jurnalotaku.com/all',
+          method: 'GET',
+        );
+
+  static Future<List<PostModel>> parseBody(Response response) async {
+    final List<PostModel> posts = [];
+    final document = parser.parse(response.body);
+    final divs = document.querySelectorAll('.section-content .article-wrapper');
+    for (var i = 0; i < divs.length; i++) {
+      try {
+        final div = divs[i];
+        final title = div
+            .querySelector('.meta')
+            ?.querySelector('.title')
+            ?.querySelector('span')
+            ?.text;
+        final link = div
+            .querySelector('.meta')
+            ?.querySelector('.title')
+            ?.attributes['href'];
+        final summary = div
+            .querySelector('.meta')
+            ?.querySelector('.summary')
+            ?.children[1]
+            .text;
+        final image = div
+            .querySelector('.cover')
+            ?.querySelector('img')
+            ?.attributes['src'];
+
+        // check img
+        if (image == null) continue;
+        final imgCheck = await get(Uri.parse(image));
+        if (imgCheck.statusCode != 200) continue;
+
+        // add
+        print(summary);
+        posts.add(PostModel(
+          title: title ?? '',
+          url: link ?? '',
+          image: image ?? '',
+          content: '',
+          source: 'jurnalotaku',
+          summary: summary,
+        ));
+      } catch (e) {}
+    }
+    return posts;
   }
 }
