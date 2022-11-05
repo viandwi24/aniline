@@ -116,6 +116,26 @@ class ApiMovieRecommendationGet extends ApiContract {
   }
 }
 
+class ApiMovieGet extends ApiContract {
+  ApiMovieGet({required this.id})
+      : super(
+          url: 'https://api.jikan.moe/v4/anime/$id/full',
+          method: 'GET',
+        );
+
+  final String id;
+}
+
+class ApiMovieCharactersGet extends ApiContract {
+  ApiMovieCharactersGet({required this.id})
+      : super(
+          url: 'https://api.jikan.moe/v4/anime/$id/characters',
+          method: 'GET',
+        );
+
+  final String id;
+}
+
 class ApiMovieSearch extends ApiContract {
   ApiMovieSearch(String query)
       : super(
@@ -167,7 +187,8 @@ class ApiPostJurnalOtakuGet extends ApiContract {
   static Future<List<PostModel>> parseBody(Response response) async {
     final List<PostModel> posts = [];
     final document = parser.parse(response.body);
-    final divs = document.querySelectorAll('.section-content .article-wrapper');
+    final divs = document
+        .querySelectorAll('.section-wrapper .section-content .article-wrapper');
     for (var i = 0; i < divs.length; i++) {
       try {
         final div = divs[i];
@@ -192,11 +213,11 @@ class ApiPostJurnalOtakuGet extends ApiContract {
 
         // check img
         if (image == null) continue;
-        final imgCheck = await get(Uri.parse(image));
-        if (imgCheck.statusCode != 200) continue;
+        // final imgCheck = await get(Uri.parse(image));
+        // if (imgCheck.statusCode != 200) continue;
 
         // add
-        print(summary);
+        print(title);
         posts.add(PostModel(
           title: title ?? '',
           url: link ?? '',

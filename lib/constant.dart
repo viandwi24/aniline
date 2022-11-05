@@ -12,22 +12,72 @@ const Color kPinkColor = Color(0xFFFF6FB5);
 const Color kTealColor = Color(0xFF55D8C1);
 
 // THEME DATA
+// THEME DATA
 final TextTheme kDefaultTextTheme = TextTheme(
-  button: GoogleFonts.nunitoSans(
+  button: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 20,
       color: kTextColor,
     ),
   ),
-  bodyText1: GoogleFonts.nunitoSans(
+  bodyText1: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 14,
       color: kTextColor,
     ),
   ),
-  bodyText2: GoogleFonts.nunitoSans(
+  bodyText2: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 14,
+      color: kTextColor,
+    ),
+  ),
+  headline1: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 40,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
+  headline2: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
+  headline3: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
+  headline4: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
+  headline5: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
+  headline6: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
+  caption: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
       color: kTextColor,
     ),
   ),

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:aniline/components/catalog_card.dart';
 import 'package:aniline/constant.dart';
+import 'package:aniline/models/anime.dart';
+import 'package:aniline/screens/anime_detail/anime_detail.dart';
 import 'package:aniline/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
   Timer? _debounce;
   bool _isLoading = false;
   final _searchController = TextEditingController();
-  List<AnilineCatalogCard> _items = [];
+  List<AnimeModel> _items = [];
 
   _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
@@ -46,17 +48,17 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
         await UseApi().revoke(ApiMovieSearch(_searchController.text));
     final animes = ApiMovieSearch.parseBody(response);
     final List<AnilineCatalogCard> newItems = [];
-    for (final anime in animes) {
-      newItems.add(AnilineCatalogCard(
-        title: anime.title,
-        cover: anime.image,
-        labelTop: 'Eps 13',
-        labelBottom: 'Drama',
-      ));
-    }
+    // for (final anime in animes) {
+    //   newItems.add(AnilineCatalogCard(
+    //     title: anime.title,
+    //     cover: anime.image,
+    //     labelTop: 'Eps 13',
+    //     labelBottom: 'Drama',
+    //   ));
+    // }
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      _items = newItems;
+      _items = animes;
       _isLoading = false;
     });
   }
@@ -114,7 +116,24 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
                         Container(
                           margin: const EdgeInsets.only(bottom: 15),
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: item,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => AnimeDetailScreen(
+                                    anime: item,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: AnilineCatalogCard(
+                              title: item.title,
+                              cover: item.image,
+                              labelTop: 'Eps 13',
+                              labelBottom: 'Drama',
+                            ),
+                          ),
                         ),
                     ],
                   ),

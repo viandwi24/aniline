@@ -20,7 +20,7 @@ class _AnilineAppState extends State<AnilineApp> {
 
     return MaterialApp(
       theme: anilineTheme,
-      title: 'Flutter Demo',
+      title: 'Aniline',
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );

@@ -1,6 +1,9 @@
 import 'package:aniline/components/catalog_card.dart';
 import 'package:aniline/constant.dart';
+import 'package:aniline/models/anime.dart';
+import 'package:aniline/screens/anime_detail/anime_detail.dart';
 import 'package:aniline/services/api.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -36,6 +39,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     //   genre: 'Romance',
     // ),
   ];
+  List<AnimeModel> _items = [];
 
   // fetch
   _fetchData() async {
@@ -45,17 +49,21 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     final response = await UseApi().revoke(ApiMovieRecommendationGet());
     final animes = ApiMovieRecommendationGet.parseBody(response);
     final List<AnilineCatalogCard> newItems = [];
-    for (final anime in animes) {
-      newItems.add(AnilineCatalogCard(
-        title: anime.title,
-        cover: anime.image,
-        labelTop: 'Eps 13',
-        labelBottom: 'Drama',
-      ));
-    }
+    // for (final anime in animes) {
+    //   // newItems.add(AnilineCatalogCard(
+    //   //   title: anime.title,
+    //   //   cover: anime.image,
+    //   //   labelTop: 'Eps 13',
+    //   //   labelBottom: 'Drama',
+    //   // ));
+    //   _items.add(anime);
+    // }
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      items = newItems;
+      _items.clear();
+      _items.addAll(animes);
+      print(_items.length);
+      // items = newItems;
       isLoading = false;
     });
   }
@@ -119,11 +127,28 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             ),
             Column(
               children: <Widget>[
-                for (var item in items)
+                for (var item in _items)
                   Container(
                     margin: const EdgeInsets.only(bottom: 15),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: item,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => AnimeDetailScreen(
+                              anime: item,
+                            ),
+                          ),
+                        );
+                      },
+                      child: AnilineCatalogCard(
+                        title: item.title,
+                        cover: item.image,
+                        labelTop: 'Eps 13',
+                        labelBottom: 'Drama',
+                      ),
+                    ),
                   ),
               ],
             ),
