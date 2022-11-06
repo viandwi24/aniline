@@ -1,6 +1,16 @@
-# aniline
+# Aniline (Anime List and News)
 
-A new Flutter project.
+A portal app for discovery and explorer movie and anime in the world.  
+
+This app is a replica of MyAnimeList website in the form of a mobile application.
+
+
+## Preview
+
+Home page
+
+![Home Page Preview](./assets/images/homepreview.png)
+
 
 ## Getting Started
 
