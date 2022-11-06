@@ -31,7 +31,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  flutter_launcher_icons: ^0.10.0
   google_fonts: ^3.0.1
   html: ^0.15.1
   http: ^0.13.5
@@ -39,6 +38,7 @@ dependencies:
 
 dev_dependencies:
   dart_code_metrics: 4.20.0
+  flutter_launcher_icons: ^0.10.0
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
@@ -80,19 +80,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
-
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 16 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "ssets/images/icon.png"
+    image_path: "assets/images/logo.png"
     background_color: "#00B6F0"
     theme_color: "#00B6F0"
   windows:
     generate: true
-    image_path: "ssets/images/icon.png"
+    image_path: "assets/images/icon.png"
     icon_size: 48
