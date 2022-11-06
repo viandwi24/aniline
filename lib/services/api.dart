@@ -136,6 +136,36 @@ class ApiMovieCharactersGet extends ApiContract {
   final String id;
 }
 
+class ApiMovieCharacterGet extends ApiContract {
+  ApiMovieCharacterGet({required this.id})
+      : super(
+          url: 'https://api.jikan.moe/v4/characters/$id/full',
+          method: 'GET',
+        );
+
+  final int id;
+}
+
+class ApiMovieVoiceActorGet extends ApiContract {
+  ApiMovieVoiceActorGet({required this.id})
+      : super(
+          url: 'https://api.jikan.moe/v4/people/$id/full',
+          method: 'GET',
+        );
+
+  final int id;
+}
+
+class ApiMovieVoiceActorRolesGet extends ApiContract {
+  ApiMovieVoiceActorRolesGet({required this.id})
+      : super(
+          url: 'https://api.jikan.moe/v4/people/$id/voices',
+          method: 'GET',
+        );
+
+  final int id;
+}
+
 class ApiMovieSearch extends ApiContract {
   ApiMovieSearch(String query)
       : super(

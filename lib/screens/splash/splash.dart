@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:aniline/components/button.dart';
-import 'package:aniline/models/anime.dart';
 import 'package:aniline/screens/main/main.dart';
-import 'package:aniline/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:aniline/constant.dart';
 
@@ -49,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: const Text(
                 "AniLine",
                 style: TextStyle(
-                  color: kTextColor,
+                  color: kTextLightColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
                 ),
@@ -60,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
               margin: const EdgeInsets.only(bottom: 20),
               child: const Text(
                 "a portal app for discovery and explorer movie and anime in the world.",
-                style: TextStyle(color: kTextColor),
+                style: TextStyle(color: kTextLightColor),
                 textAlign: TextAlign.center,
               ),
             ),
