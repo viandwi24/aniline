@@ -261,3 +261,12 @@ class ApiPostJurnalOtakuGet extends ApiContract {
     return posts;
   }
 }
+
+class ApiPostJurnalOtakuDetailGet extends ApiContract {
+  ApiPostJurnalOtakuDetailGet({required this.url})
+      : super(
+          url: url,
+          method: 'GET',
+        );
+  final String url;
+}
