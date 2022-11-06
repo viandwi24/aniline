@@ -1,7 +1,7 @@
 import 'package:aniline/components/catalog_card.dart';
 import 'package:aniline/constant.dart';
 import 'package:aniline/models/anime.dart';
-import 'package:aniline/screens/anime_detail/anime_detail.dart';
+import 'package:aniline/screens/movie_detail/anime/anime_detail.dart';
 import 'package:aniline/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
