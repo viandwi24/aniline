@@ -218,6 +218,11 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   shrinkWrap: true,
                   itemCount: characters.length,
                   itemBuilder: (context, index) {
+                    if (!((characters[index]?['voice_actors']) is List) ||
+                        characters[index]?['voice_actors'].length == 0) {
+                      return Container();
+                    }
+
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
