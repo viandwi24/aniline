@@ -69,6 +69,13 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
   }
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget wrapper = SliverFillRemaining(
       child: Column(
@@ -123,7 +130,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                getData<String>('about', def: ''),
+                getData<String>('about', def: '-'),
                 style: Theme.of(context).textTheme.caption?.merge(
                       const TextStyle(
                         // color: Colors.white,
@@ -205,6 +212,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
             SliverAppBar(
               expandedHeight: 300,
               pinned: true,
+              backgroundColor: kPrimaryColor,
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
                   width: double.infinity,
