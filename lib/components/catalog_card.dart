@@ -6,6 +6,7 @@ class AnilineCatalogCard extends StatefulWidget {
     Key? key,
     required this.title,
     required this.cover,
+    this.direction,
     this.labelBottom,
     this.labelTop,
     this.content,
@@ -20,6 +21,7 @@ class AnilineCatalogCard extends StatefulWidget {
   final String? labelBottom;
   final String? labelTop;
   final String? content;
+  final Axis? direction;
 
   @override
   State<AnilineCatalogCard> createState() => _AnilineCatalogCardState();

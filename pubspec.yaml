@@ -36,6 +36,7 @@ dependencies:
   html: ^0.15.1
   http: ^0.13.5
   lottie: ^1.4.3
+  unicons: ^2.1.0
 
 dev_dependencies:
   dart_code_metrics: 4.20.0
