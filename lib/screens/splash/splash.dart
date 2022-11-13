@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: const BoxDecoration(
           color: kBackgroundColor,
           image: DecorationImage(
-            image: AssetImage('assets/images/sc.jpg'),
+            image: AssetImage('assets/images/splash.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: const Text(
                 "AniLine",
                 style: TextStyle(
-                  color: kTextLightColor,
+                  color: kTextColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
                 ),
@@ -57,14 +57,14 @@ class _SplashScreenState extends State<SplashScreen> {
               margin: const EdgeInsets.only(bottom: 20),
               child: const Text(
                 "a portal app for discovery and explorer movie and anime in the world.",
-                style: TextStyle(color: kTextLightColor),
+                style: TextStyle(color: kTextColor),
                 textAlign: TextAlign.center,
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: AnilineButton(
-                text: 'Getting Started $signature',
+                text: 'Getting Started',
                 onPressed: onPressMainButton,
               ),
             ),
