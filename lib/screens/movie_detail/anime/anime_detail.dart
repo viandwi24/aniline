@@ -154,46 +154,63 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                height: 100,
+                height: 140,
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemCount: characters.length,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) {
-                              return CharacterDetailScreen(
-                                id: characters[index]?['character']
-                                        ?['mal_id'] ??
-                                    1,
-                                image: characters[index]?['character']
-                                        ?['images']?['jpg']?['image_url'] ??
-                                    '',
-                              );
-                            },
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) {
+                                  return CharacterDetailScreen(
+                                    id: characters[index]?['character']
+                                            ?['mal_id'] ??
+                                        1,
+                                    image: characters[index]?['character']
+                                            ?['images']?['jpg']?['image_url'] ??
+                                        '',
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.network(
+                              characters[index]?['character']?['images']?['jpg']
+                                      ?['image_url'] ??
+                                  '',
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          characters[index]?['character']?['images']?['jpg']
-                                  ?['image_url'] ??
-                              '',
-                          fit: BoxFit.cover,
+                        Text(
+                          characters[index]?['character']?['name'],
+                          style: TextStyle(fontSize: 12),
                         ),
-                      ),
+                        Text(
+                          "CV. " +
+                              (characters[index]?['voice_actors']?[0]?['person']
+                                      ?['name'])
+                                  .toString(),
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                      crossAxisAlignment: CrossAxisAlignment.center,
                     );
                   },
                 ),
@@ -211,7 +228,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                height: 100,
+                height: 140,
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -223,40 +240,51 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                       return Container();
                     }
 
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) {
-                              return VoiceActorDetailScreen(
-                                id: characters[index]?['voice_actors']?[0]
-                                        ?['person']?['mal_id'] ??
-                                    1,
-                                image: characters[index]?['voice_actors']?[0]
-                                            ?['person']?['images']?['jpg']
-                                        ?['image_url'] ??
-                                    1,
-                              );
-                            },
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) {
+                                  return VoiceActorDetailScreen(
+                                    id: characters[index]?['voice_actors']?[0]
+                                            ?['person']?['mal_id'] ??
+                                        1,
+                                    image: characters[index]?['voice_actors']
+                                                ?[0]?['person']?['images']
+                                            ?['jpg']?['image_url'] ??
+                                        1,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.network(
+                              characters[index]?['voice_actors']?[0]?['person']
+                                      ?['images']?['jpg']?['image_url'] ??
+                                  '',
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          characters[index]?['voice_actors']?[0]?['person']
-                                  ?['images']?['jpg']?['image_url'] ??
-                              '',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                        Text(
+                          (characters[index]?['voice_actors']?[0]?['person']
+                                  ?['name'])
+                              .toString(),
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
                     );
                   },
                 ),
