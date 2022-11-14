@@ -116,6 +116,42 @@ class ApiMovieRecommendationGet extends ApiContract {
   }
 }
 
+class ApiMovieTopGet extends ApiContract {
+  ApiMovieTopGet()
+      : super(
+          url: 'https://api.jikan.moe/v4/top/anime',
+          method: 'GET',
+        );
+
+  static List<AnimeModel> parseBody(Response response, {maxAnime = 10}) {
+    final List<AnimeModel> animes = [];
+
+    // parse
+    final parsedBody = ApiContract.parseToJson(response);
+    final data = parsedBody['data'];
+
+    // if data found and is array
+    if (data != null && data is List) {
+      // loop through data
+      for (var i = 0; i < data.length; i++) {
+        // get item
+        final item = data[i];
+        // if entry found and is map
+        if (item != null && item is Map) {
+          try {
+            final m = AnimeModel.fromJson(item);
+            animes.add(m);
+          } catch (e) {
+            print(e);
+          }
+        }
+      }
+    }
+
+    return animes;
+  }
+}
+
 class ApiMovieGet extends ApiContract {
   ApiMovieGet({required this.id})
       : super(

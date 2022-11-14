@@ -42,6 +42,13 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
     return (value ?? def) as T;
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<void> fetchData() async {
     setState(() {
       _isLoading = true;
@@ -304,28 +311,32 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
             SliverAppBar(
               expandedHeight: 300,
               pinned: true,
+              backgroundColor: kPrimaryColor,
               flexibleSpace: FlexibleSpaceBar(
-                background: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    image: DecorationImage(
-                      image: Image.network(
-                        widget.anime.image,
-                        fit: BoxFit.cover,
-                      ).image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                background: Hero(
+                  tag: 'back',
                   child: Container(
+                    width: double.infinity,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          Colors.black.withOpacity(0.8),
-                        ],
+                      color: Colors.black,
+                      image: DecorationImage(
+                        image: Image.network(
+                          widget.anime.image,
+                          fit: BoxFit.cover,
+                        ).image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.8),
+                          ],
+                        ),
                       ),
                     ),
                   ),

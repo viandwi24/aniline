@@ -3,11 +3,12 @@ import 'dart:ffi';
 import 'package:aniline/components/catalog_card.dart';
 import 'package:aniline/constant.dart';
 import 'package:aniline/models/post.dart';
+import 'package:aniline/screens/news_detail/content/news_content.dart';
 import 'package:aniline/services/api.dart';
 import 'package:aniline/utils/get_post.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:html/parser.dart' as parser;
 
 class NewsTabScreen extends StatefulWidget {
   const NewsTabScreen({Key? key}) : super(key: key);
@@ -59,66 +60,56 @@ class _NewsTabScreenState extends State<NewsTabScreen> {
       );
     }
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    'News',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: kTextColor,
+    return SafeArea(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'News',
+                      style: Theme.of(context).textTheme.headline5,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Column(
-              children: <Widget>[
-                for (var item in items)
-                  GestureDetector(
-                    onTap: () async {
-                      final result = await UseApi()
-                          .revoke(ApiPostJurnalOtakuDetailGet(url: item.url));
-                      final document = parser.parse(result.body);
-                      final title = document
-                              .querySelector(
-                                  '.paper-main-full-wrapper .meta-info .title h1 span')
-                              ?.text ??
-                          '';
-                      final cover = document
-                              .querySelector(
-                                '.meta-cover img',
-                              )
-                              ?.attributes['src'] ??
-                          '';
-                      final content =
-                          document.querySelector('.meta-content')?.innerHtml ??
-                              '';
-                      print(content);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 15),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: AnilineCatalogCard(
-                        title: item.title,
-                        cover: item.image,
-                        labelTop: item.source,
-                        content: item.summary,
+              Column(
+                children: <Widget>[
+                  for (var item in items)
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => NewsContentDetailScreen(
+                              link: item.url,
+                              image: item.image,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: AnilineCatalogCard(
+                          title: item.title,
+                          cover: item.image,
+                          labelTop: item.source,
+                          content: item.summary,
+                        ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

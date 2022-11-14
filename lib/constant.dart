@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 // COLORS SCHEME
 const Color kPrimaryColor = Color(0xFF00B6F0);
 const Color kBackgroundColor = Color(0xFFFFFFFF);
-const Color kBackgroundSecondaryColor = Color(0xFFF8FAFB);
+const Color kBackgroundSecondaryColor = Color.fromARGB(255, 238, 238, 238);
 const Color kTextColor = Color(0xFF272728);
 const Color kTextLightColor = Color(0xFFFFFFFF);
 const Color kYellowColor = Color(0xFFFFEEC3);
@@ -35,35 +35,35 @@ final TextTheme kDefaultTextTheme = TextTheme(
   headline1: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 40,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       color: kTextColor,
     ),
   ),
   headline2: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 36,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       color: kTextColor,
     ),
   ),
   headline3: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 32,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       color: kTextColor,
     ),
   ),
   headline4: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 28,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       color: kTextColor,
     ),
   ),
   headline5: GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 24,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       color: kTextColor,
     ),
   ),

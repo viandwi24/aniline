@@ -64,99 +64,109 @@ class _ExplorerTabScreenState extends State<ExplorerTabScreen> {
   }
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      child: Column(
-        children: [
-          Container(
-            clipBehavior: Clip.hardEdge,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: kBackgroundSecondaryColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                Flexible(
-                  flex: 12,
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: _onSearchChanged,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      filled: true,
-                      hintStyle: TextStyle(color: Colors.grey[800]),
-                      hintText: "Search anime title...",
-                      fillColor: kBackgroundSecondaryColor,
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: kBackgroundSecondaryColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 12,
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: _onSearchChanged,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.grey[800]),
+                        hintText: "Search anime title...",
+                        fillColor: kBackgroundSecondaryColor,
+                      ),
                     ),
                   ),
-                ),
-                Flexible(
-                  flex: 1,
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      child: Icon(
+                        CupertinoIcons.search,
+                        color: kTextColor.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (!_isLoading)
+              Flexible(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Container(
-                    child: Icon(
-                      CupertinoIcons.search,
-                      color: kTextColor.withOpacity(0.3),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (!_isLoading)
-            Flexible(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Container(
-                  margin: const EdgeInsets.only(top: 25),
-                  child: Column(
-                    children: <Widget>[
-                      for (var item in _items)
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 15),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => AnimeDetailScreen(
-                                    anime: item,
+                    margin: const EdgeInsets.only(top: 25),
+                    child: Column(
+                      children: <Widget>[
+                        for (var item in _items)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => AnimeDetailScreen(
+                                      anime: item,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            child: AnilineCatalogCard(
-                              title: item.title,
-                              cover: item.image,
-                              labelTop: 'Eps 13',
-                              labelBottom: 'Drama',
+                                );
+                              },
+                              child: AnilineCatalogCard(
+                                title: item.title,
+                                cover: item.image,
+                                labelTop: 'Eps 13',
+                                labelBottom: 'Drama',
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          if (_isLoading)
-            Flexible(
-              child: Container(
-                alignment: Alignment.center,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Lottie.asset('assets/anims/96031-loading-animation.json'),
-                      const Text('Chottomatte kudasai...'),
-                    ],
+            if (_isLoading)
+              Flexible(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Lottie.asset(
+                            'assets/anims/96031-loading-animation.json'),
+                        const Text('Chottomatte kudasai...'),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

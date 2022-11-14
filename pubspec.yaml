@@ -31,10 +31,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_html: ^2.2.1
   google_fonts: ^3.0.1
   html: ^0.15.1
   http: ^0.13.5
   lottie: ^1.4.3
+  unicons: ^2.1.0
 
 dev_dependencies:
   dart_code_metrics: 4.20.0
