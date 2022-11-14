@@ -14,61 +14,167 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final String signature = Random().nextInt(1000000000).toString();
+  int _selectedIndex = 0;
+  final List<String> _listText = [
+    'A portal app for discovery and explorer movie and anime in the world.',
+    'Get anime, manga and anime recommendation every day.',
+    'Explore anime with our search',
+  ];
+  final List<String> _listBg = [
+    'assets/images/land_1.jpg',
+    'assets/images/land_2.jpg',
+    'assets/images/land_3.jpg',
+  ];
 
   Future onPressMainButton() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const AnilineMainScreen(),
-      ),
-    );
+    if (_selectedIndex < 2) {
+      setState(() {
+        _selectedIndex++;
+      });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AnilineMainScreen(),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Image.asset(
+            'assets/images/logo.png',
+            width: 128,
+            height: 128,
+          ),
+        ),
+      ),
       body: Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(bottom: 30),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: kBackgroundColor,
           image: DecorationImage(
-            image: AssetImage('assets/images/splash.png'),
+            image: AssetImage(_listBg[_selectedIndex]),
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: const Text(
-                "AniLine",
-                style: TextStyle(
-                  color: kTextColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 30),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                Colors.black,
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: const Text(
+                      "AniLine",
+                      style: TextStyle(
+                        color: kTextLightColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      _listText[_selectedIndex],
+                      style: const TextStyle(color: kTextLightColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: 10,
+                      width: _selectedIndex == 0 ? 40 : 10,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: _selectedIndex == 0
+                            ? kPrimaryColor
+                            : kPrimaryColor.withOpacity(0.4),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: 10,
+                      width: _selectedIndex == 1 ? 40 : 10,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: _selectedIndex == 1
+                            ? kPrimaryColor
+                            : kPrimaryColor.withOpacity(0.4),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: 10,
+                      width: _selectedIndex == 2 ? 40 : 10,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: _selectedIndex == 2
+                            ? kPrimaryColor
+                            : kPrimaryColor.withOpacity(0.4),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              margin: const EdgeInsets.only(bottom: 20),
-              child: const Text(
-                "a portal app for discovery and explorer movie and anime in the world.",
-                style: TextStyle(color: kTextColor),
-                textAlign: TextAlign.center,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: AnilineButton(
+                  text: _selectedIndex < 2 ? "Next" : "Get Started",
+                  onPressed: onPressMainButton,
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: AnilineButton(
-                text: 'Getting Started',
-                onPressed: onPressMainButton,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -81,4 +81,11 @@ final TextTheme kDefaultTextTheme = TextTheme(
       color: kTextColor,
     ),
   ),
+  labelMedium: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: kTextColor,
+    ),
+  ),
 );

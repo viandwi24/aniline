@@ -16,11 +16,15 @@ class AnilineButton extends StatelessWidget {
       onPressed: onPressed,
       shape: const StadiumBorder(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
         width: double.infinity,
         child: Text(
           text,
-          style: const TextStyle(color: kTextColor),
+          style: Theme.of(context).textTheme.labelMedium?.merge(
+                const TextStyle(
+                  color: kTextLightColor,
+                ),
+              ),
           textAlign: TextAlign.center,
         ),
       ),
