@@ -218,7 +218,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                                         ),
                                       ],
                                     ),
-                                    child: Text(item.title),
+                                    // child: Text(item.title),
                                   ),
                                 ),
                               );
@@ -234,7 +234,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 15),
+                              horizontal: 10,
+                              vertical: 15,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

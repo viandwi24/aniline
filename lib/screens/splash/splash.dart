@@ -41,6 +41,12 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  onPressSkipButton() {
+    setState(() {
+      _selectedIndex = 2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,65 +120,98 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: 10,
-                      width: _selectedIndex == 0 ? 40 : 10,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        color: _selectedIndex == 0
-                            ? kPrimaryColor
-                            : kPrimaryColor.withOpacity(0.4),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
+                    if (_selectedIndex < 2)
+                      Flexible(
+                        child: Container(
+                          child: AnilineButton(
+                            color: Colors.transparent,
+                            text: "Skip",
+                            onPressed: onPressSkipButton,
+                          ),
                         ),
                       ),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: 10,
-                      width: _selectedIndex == 1 ? 40 : 10,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        color: _selectedIndex == 1
-                            ? kPrimaryColor
-                            : kPrimaryColor.withOpacity(0.4),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
+                    Expanded(
+                      flex: 4,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: 10,
+                            width: _selectedIndex == 0 ? 40 : 10,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              color: _selectedIndex == 0
+                                  ? kPrimaryColor
+                                  : kPrimaryColor.withOpacity(0.4),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: 10,
+                            width: _selectedIndex == 1 ? 40 : 10,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              color: _selectedIndex == 1
+                                  ? kPrimaryColor
+                                  : kPrimaryColor.withOpacity(0.4),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: 10,
+                            width: _selectedIndex == 2 ? 40 : 10,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              color: _selectedIndex == 2
+                                  ? kPrimaryColor
+                                  : kPrimaryColor.withOpacity(0.4),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: 10,
-                      width: _selectedIndex == 2 ? 40 : 10,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        color: _selectedIndex == 2
-                            ? kPrimaryColor
-                            : kPrimaryColor.withOpacity(0.4),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
+                    if (_selectedIndex < 2)
+                      Flexible(
+                        child: Container(
+                          child: AnilineButton(
+                            color: Colors.transparent,
+                            text: "Next",
+                            onPressed: onPressMainButton,
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: AnilineButton(
-                  text: _selectedIndex < 2 ? "Next" : "Get Started",
-                  onPressed: onPressMainButton,
+              if (_selectedIndex >= 2)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  width: double.infinity,
+                  child: AnilineButton(
+                    text: "Get Started",
+                    onPressed: onPressMainButton,
+                  ),
                 ),
-              ),
             ],
           ),
         ),

@@ -5,8 +5,10 @@ import 'package:aniline/models/anime.dart';
 import 'package:aniline/screens/movie_detail/character/character_detail.dart';
 import 'package:aniline/screens/movie_detail/voice_actor/voice_actor.dart';
 import 'package:aniline/services/api.dart';
+import 'package:aniline/services/db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 
 class AnimeDetailScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
   bool _isLoading = false;
   dynamic data = {};
   dynamic characters = {};
+  bool _isBookmarked = false;
 
   @override
   void initState() {
@@ -67,12 +70,63 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
         characters = characters['data'] ?? {};
         print('characters: $characters');
       } catch (e) {}
+
+      // check bookmark
+      // find bookarms with item.id === widget.anime.malID
+      DB.getBookmarks().forEach((element) {
+        if (element.id == widget.anime.malID) {
+          _isBookmarked = true;
+        }
+      });
+
+      // loading
       _isLoading = false;
     });
   }
 
+  Future<void> onBookmarkPress() async {
+    try {
+      var msg = "";
+      msg = _isBookmarked
+          ? "Remove ${widget.anime.title} from bookmark"
+          : "Add ${widget.anime.title} to bookmark success";
+      Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 5,
+        backgroundColor: _isBookmarked ? Colors.red : kPrimaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      setState(() {
+        _isBookmarked = !_isBookmarked;
+
+        try {
+          if (_isBookmarked) {
+            DB.addBookmark(id: widget.anime.malID, type: 'anime');
+          } else {
+            DB.removeBookmark(id: widget.anime.malID);
+          }
+        } catch (e) {
+          print('error on bookmarked $e');
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future checkBookmarked() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkBookmarked();
+
     Widget wrapper = SliverFillRemaining(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -94,8 +148,10 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
+                    flex: 5,
                     child: Text(
                       widget.anime.title,
                       style: Theme.of(context).textTheme.caption?.merge(
@@ -108,6 +164,17 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: RawMaterialButton(
+                        child: Icon(_isBookmarked
+                            ? Icons.bookmark_added
+                            : Icons.bookmark_outline),
+                        onPressed: onBookmarkPress,
+                      ),
+                    ),
+                  )
                 ],
               ),
               const SizedBox(height: 10),
@@ -169,6 +236,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   itemCount: characters.length,
                   itemBuilder: (context, index) {
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -195,14 +263,16 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  characters[index]?['character']?['images']
+                                          ?['jpg']?['image_url'] ??
+                                      '',
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             clipBehavior: Clip.hardEdge,
-                            child: Image.network(
-                              characters[index]?['character']?['images']?['jpg']
-                                      ?['image_url'] ??
-                                  '',
-                              fit: BoxFit.fill,
-                            ),
                           ),
                         ),
                         Text(
@@ -210,14 +280,15 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           style: TextStyle(fontSize: 12),
                         ),
                         Text(
-                          "CV. " +
-                              (characters[index]?['voice_actors']?[0]?['person']
-                                      ?['name'])
-                                  .toString(),
+                          ((characters[index]?['voice_actors'] as List)
+                                  .isNotEmpty
+                              ? (characters[index]?['voice_actors']?[0]
+                                      ?['person']?['name'] ??
+                                  '')
+                              : ''),
                           style: TextStyle(fontSize: 12),
                         )
                       ],
-                      crossAxisAlignment: CrossAxisAlignment.center,
                     );
                   },
                 ),
@@ -287,7 +358,8 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                         ),
                         Text(
                           (characters[index]?['voice_actors']?[0]?['person']
-                                  ?['name'])
+                                      ?['name'] ??
+                                  '')
                               .toString(),
                           style: TextStyle(fontSize: 12),
                         )

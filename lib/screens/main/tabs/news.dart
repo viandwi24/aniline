@@ -29,6 +29,13 @@ class _NewsTabScreenState extends State<NewsTabScreen> {
     });
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   _fetchData() async {
     setState(() {
       isLoading = true;
