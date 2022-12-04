@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AnimeDetailScreen extends StatefulWidget {
   const AnimeDetailScreen({super.key, required this.anime});
@@ -117,6 +118,21 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
     }
   }
 
+  Future<void> onSharePress() async {
+    try {
+      // final FlutterShareMe flutterShareMe = FlutterShareMe();
+      final String msg =
+          '**${widget.anime.title}** \n\n https://myanimelist.net/anime/${widget.anime.malID}';
+      print('msg to share: $msg');
+      Share.share(msg, subject: 'Check this out!');
+      // await flutterShareMe.shareToSystem(
+      //   msg: msg,
+      // );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future checkBookmarked() async {
     // setState(() {
     //   _isLoading = true;
@@ -151,7 +167,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
-                    flex: 5,
+                    flex: 4,
                     child: Text(
                       widget.anime.title,
                       style: Theme.of(context).textTheme.caption?.merge(
@@ -167,11 +183,26 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      child: RawMaterialButton(
-                        child: Icon(_isBookmarked
-                            ? Icons.bookmark_added
-                            : Icons.bookmark_outline),
-                        onPressed: onBookmarkPress,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: GestureDetector(
+                              child: Icon(Icons.share),
+                              onTap: onSharePress,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: GestureDetector(
+                              child: Icon(_isBookmarked
+                                  ? Icons.bookmark_added
+                                  : Icons.bookmark_outline),
+                              onTap: onBookmarkPress,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   )
