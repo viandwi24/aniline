@@ -143,7 +143,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
               const SizedBox(height: 30),
               Text(
-                'Characters',
+                'Characters and Voice Actors',
                 style: Theme.of(context).textTheme.caption?.merge(
                       const TextStyle(
                         // color: Colors.white,
@@ -154,114 +154,116 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                height: 100,
+                height: 400,
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemCount: characters.length,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) {
-                              return CharacterDetailScreen(
-                                id: characters[index]?['character']
-                                        ?['mal_id'] ??
-                                    1,
-                                image: characters[index]?['character']
-                                        ?['images']?['jpg']?['image_url'] ??
-                                    '',
-                              );
-                            },
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) {
+                                  return CharacterDetailScreen(
+                                    id: characters[index]?['character']
+                                            ?['mal_id'] ??
+                                        1,
+                                    image: characters[index]?['character']
+                                            ?['images']?['jpg']?['image_url'] ??
+                                        '',
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            width: 100,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.network(
+                              characters[index]?['character']?['images']?['jpg']
+                                      ?['image_url'] ??
+                                  '',
+                              fit: BoxFit.cover,
+                              height: 100,
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          characters[index]?['character']?['images']?['jpg']
-                                  ?['image_url'] ??
-                              '',
-                          fit: BoxFit.cover,
+                        Container(
+                            width: 100,
+                            height: 40,
+                            child: Text(
+                              characters[index]?['character']?['name'],
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            )),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) {
+                                  return VoiceActorDetailScreen(
+                                    id: characters[index]?['voice_actors']?[0]
+                                            ?['person']?['mal_id'] ??
+                                        1,
+                                    image: characters[index]?['voice_actors']
+                                                ?[0]?['person']?['images']
+                                            ?['jpg']?['image_url'] ??
+                                        1,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.network(
+                              characters[index]?['voice_actors']?[0]?['person']
+                                      ?['images']?['jpg']?['image_url'] ??
+                                  '',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
+                        Container(
+                          width: 100,
+                          height: 30,
+                          child: Text(
+                            "CV. " +
+                                (characters[index]?['voice_actors']?[0]
+                                        ?['person']?['name'])
+                                    .toString(),
+                            style: TextStyle(fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 30),
-              Text(
-                'Voice Actors',
-                style: Theme.of(context).textTheme.caption?.merge(
-                      const TextStyle(
-                        // color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                      ),
-                    ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                height: 100,
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: characters.length,
-                  itemBuilder: (context, index) {
-                    if (!((characters[index]?['voice_actors']) is List) ||
-                        characters[index]?['voice_actors'].length == 0) {
-                      return Container();
-                    }
-
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) {
-                              return VoiceActorDetailScreen(
-                                id: characters[index]?['voice_actors']?[0]
-                                        ?['person']?['mal_id'] ??
-                                    1,
-                                image: characters[index]?['voice_actors']?[0]
-                                            ?['person']?['images']?['jpg']
-                                        ?['image_url'] ??
-                                    1,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          characters[index]?['voice_actors']?[0]?['person']
-                                  ?['images']?['jpg']?['image_url'] ??
-                              '',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
