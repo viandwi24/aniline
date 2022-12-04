@@ -91,7 +91,8 @@ class _NewsTabScreenState extends State<NewsTabScreen> {
                       final document = parser.parse(result.body);
                       final title = document
                               .querySelector(
-                                  '.paper-main-full-wrapper .meta-info .title h1 span')
+                                '.paper-main-full-wrapper .meta-info .title h1 span',
+                              )
                               ?.text ??
                           '';
                       final cover = document

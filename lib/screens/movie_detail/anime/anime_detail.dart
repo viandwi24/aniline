@@ -200,15 +200,16 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           ),
                         ),
                         Container(
-                            width: 100,
-                            height: 40,
-                            child: Text(
-                              characters[index]?['character']?['name'],
-                              style: TextStyle(
-                                fontSize: 12,
-                              ),
-                              textAlign: TextAlign.center,
-                            )),
+                          width: 100,
+                          height: 40,
+                          child: Text(
+                            characters[index]?['character']?['name'],
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () {
@@ -248,13 +249,13 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                         ),
                         Container(
                           width: 100,
-                          height: 30,
+                          height: 40,
                           child: Text(
                             "CV. " +
                                 (characters[index]?['voice_actors']?[0]
                                         ?['person']?['name'])
                                     .toString(),
-                            style: TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 12),
                             textAlign: TextAlign.center,
                           ),
                         ),

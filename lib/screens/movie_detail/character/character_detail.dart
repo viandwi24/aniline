@@ -145,47 +145,65 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                height: 100,
+                height: 150,
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemCount: getData('voices', def: []).length,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) {
-                              return VoiceActorDetailScreen(
-                                id: getData('voices', def: [])[index]['person']
-                                        ?['mal_id'] ??
-                                    1,
-                                image: getData('voices', def: [])[index]
-                                            ['person']?['images']?['jpg']
-                                        ?['image_url'] ??
-                                    '',
-                              );
-                            },
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) {
+                                  return VoiceActorDetailScreen(
+                                    id: getData('voices', def: [])[index]
+                                            ['person']?['mal_id'] ??
+                                        1,
+                                    image: getData('voices', def: [])[index]
+                                                ['person']?['images']?['jpg']
+                                            ?['image_url'] ??
+                                        '',
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.network(
+                              getData('voices', def: [])[index]['person']
+                                      ?['images']?['jpg']?['image_url'] ??
+                                  '',
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          getData('voices', def: [])[index]['person']?['images']
-                                  ?['jpg']?['image_url'] ??
-                              '',
-                          fit: BoxFit.cover,
+                        Container(
+                          width: 100,
+                          height: 40,
+                          child: Text(
+                            getData('voices', def: [])[index]['person']
+                                    ?['name'] ??
+                                '',
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
+                      ],
                     );
                   },
                 ),
