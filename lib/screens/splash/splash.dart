@@ -122,7 +122,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 margin: const EdgeInsets.only(bottom: 20),
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                       ),
                     Expanded(
-                      flex: 4,
+                      flex: 2,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
