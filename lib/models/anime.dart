@@ -26,4 +26,14 @@ class AnimeModel {
       score: json['score'] != null ? json['score'].toString() : '0',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'mal_id': malID,
+      'title': title,
+      'content': content,
+      'image': image,
+      'score': score,
+    };
+  }
 }

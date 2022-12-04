@@ -153,13 +153,14 @@ class ApiMovieTopGet extends ApiContract {
 }
 
 class ApiMovieGet extends ApiContract {
-  ApiMovieGet({required this.id})
+  ApiMovieGet({required this.id, this.full = true})
       : super(
-          url: 'https://api.jikan.moe/v4/anime/$id/full',
+          url: 'https://api.jikan.moe/v4/anime/$id${full ? '/full' : ''}',
           method: 'GET',
         );
 
   final String id;
+  final bool full;
 }
 
 class ApiMovieCharactersGet extends ApiContract {

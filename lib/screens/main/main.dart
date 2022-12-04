@@ -1,5 +1,6 @@
 import 'package:aniline/components/navbar.dart';
 import 'package:aniline/constant.dart';
+import 'package:aniline/screens/main/tabs/bookmark.dart';
 import 'package:aniline/screens/main/tabs/news.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _AnilineMainScreenState extends State<AnilineMainScreen> {
     ['Home', const HomeTabScreen(), UniconsLine.home_alt],
     ['Explorer', const ExplorerTabScreen(), UniconsLine.search_alt],
     ['News', const NewsTabScreen(), UniconsLine.newspaper],
+    ['Bookmark', const BookmarkScreen(), UniconsLine.bookmark],
   ];
   @override
   Widget build(BuildContext context) {

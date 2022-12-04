@@ -10,8 +10,8 @@ const Color kTextLightColor = Color(0xFFFFFFFF);
 const Color kYellowColor = Color(0xFFFFEEC3);
 const Color kPinkColor = Color(0xFFFF6FB5);
 const Color kTealColor = Color(0xFF55D8C1);
+const Color kShimmerColor = Color(0xFFE0E0E0);
 
-// THEME DATA
 // THEME DATA
 final TextTheme kDefaultTextTheme = TextTheme(
   button: GoogleFonts.poppins(
@@ -78,6 +78,13 @@ final TextTheme kDefaultTextTheme = TextTheme(
     textStyle: const TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w400,
+      color: kTextColor,
+    ),
+  ),
+  labelMedium: GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
       color: kTextColor,
     ),
   ),
