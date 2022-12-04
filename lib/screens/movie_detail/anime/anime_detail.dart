@@ -217,7 +217,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
               const SizedBox(height: 30),
               Text(
-                'Characters',
+                'Characters and Voice Actors',
                 style: Theme.of(context).textTheme.caption?.merge(
                       const TextStyle(
                         // color: Colors.white,
@@ -228,7 +228,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                height: 140,
+                height: 400,
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -236,7 +236,6 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   itemCount: characters.length,
                   itemBuilder: (context, index) {
                     return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -257,69 +256,35 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                             );
                           },
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
                             width: 100,
-                            height: 100,
+                            height: 120,
                             decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  characters[index]?['character']?['images']
-                                          ?['jpg']?['image_url'] ??
-                                      '',
-                                ),
-                                fit: BoxFit.cover,
-                              ),
                             ),
                             clipBehavior: Clip.hardEdge,
+                            child: Image.network(
+                              characters[index]?['character']?['images']?['jpg']
+                                      ?['image_url'] ??
+                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdoCQ7-yS62tALBS9_FY5pExwg8Lvvsie6Iml51YO_JQ&s',
+                              fit: BoxFit.cover,
+                              height: 100,
+                            ),
                           ),
                         ),
-                        Text(
-                          characters[index]?['character']?['name'],
-                          style: TextStyle(fontSize: 12),
+                        Container(
+                          width: 100,
+                          height: 40,
+                          child: Text(
+                            characters[index]?['character']?['name'],
+                            style: const TextStyle(
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        Text(
-                          ((characters[index]?['voice_actors'] as List)
-                                  .isNotEmpty
-                              ? (characters[index]?['voice_actors']?[0]
-                                      ?['person']?['name'] ??
-                                  '')
-                              : ''),
-                          style: TextStyle(fontSize: 12),
-                        )
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 30),
-              Text(
-                'Voice Actors',
-                style: Theme.of(context).textTheme.caption?.merge(
-                      const TextStyle(
-                        // color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                      ),
-                    ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                height: 140,
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: characters.length,
-                  itemBuilder: (context, index) {
-                    if (!((characters[index]?['voice_actors']) is List) ||
-                        characters[index]?['voice_actors'].length == 0) {
-                      return Container();
-                    }
-
-                    return Column(
-                      children: [
+                        const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -333,14 +298,14 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                     image: characters[index]?['voice_actors']
                                                 ?[0]?['person']?['images']
                                             ?['jpg']?['image_url'] ??
-                                        1,
+                                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdoCQ7-yS62tALBS9_FY5pExwg8Lvvsie6Iml51YO_JQ&s',
                                   );
                                 },
                               ),
                             );
                           },
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                             width: 100,
                             height: 100,
                             decoration: BoxDecoration(
@@ -349,26 +314,36 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                             ),
                             clipBehavior: Clip.hardEdge,
                             child: Image.network(
-                              characters[index]?['voice_actors']?[0]?['person']
-                                      ?['images']?['jpg']?['image_url'] ??
-                                  '',
+                              characters[index]?['voice_actors']?.length > 0
+                                  ? (characters[index]?['voice_actors']?[0]
+                                              ?['person']?['images']?['jpg']
+                                          ?['image_url'] ??
+                                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdoCQ7-yS62tALBS9_FY5pExwg8Lvvsie6Iml51YO_JQ&s')
+                                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdoCQ7-yS62tALBS9_FY5pExwg8Lvvsie6Iml51YO_JQ&s',
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        Text(
-                          (characters[index]?['voice_actors']?[0]?['person']
-                                      ?['name'] ??
-                                  '')
-                              .toString(),
-                          style: TextStyle(fontSize: 12),
-                        )
+                        Container(
+                          width: 100,
+                          height: 40,
+                          child: Text(
+                            "CV. " +
+                                (characters[index]?['voice_actors']?.length > 0
+                                    ? (characters[index]?['voice_actors']?[0]
+                                            ?['person']?['name'])
+                                        .toString()
+                                    : ''),
+                            style: const TextStyle(fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                       ],
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 30),
             ],
           ),
         ),
