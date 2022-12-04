@@ -6,6 +6,7 @@ import 'package:aniline/models/anime.dart';
 import 'package:aniline/screens/movie_detail/anime/anime_detail.dart';
 import 'package:aniline/services/api.dart';
 import 'package:aniline/services/db.dart';
+import 'package:eventify/eventify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -22,6 +23,7 @@ class BookmarkScreen extends StatefulWidget {
 class _BookmarkScreenState extends State<BookmarkScreen> {
   bool isLoading = false;
   List<AnimeModel> _items = [];
+  List<dynamic> _listeners = [];
 
   // fetch
   _fetchData() async {
@@ -58,6 +60,11 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     });
   }
 
+  _onDBUpdated(Event ev, Object? obj) {
+    print('db updated detected, re fetch data');
+    _fetchData();
+  }
+
   // fetch data on init
   @override
   void initState() {
@@ -65,6 +72,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchData();
     });
+    _listeners.add(DB.emitter.on('updated', context, _onDBUpdated));
   }
 
   @override
@@ -72,6 +80,14 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     if (mounted) {
       super.setState(fn);
     }
+  }
+
+  @override
+  void dispose() {
+    for (var listener in _listeners) {
+      DB.emitter.off(listener);
+    }
+    super.dispose();
   }
 
   @override
